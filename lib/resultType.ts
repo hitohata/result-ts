@@ -5,20 +5,66 @@ export const Err = <E>(error: E): Result<never, E> => new ERR<E>(error);
 export const err = Err;
 
 interface IOk<T> {
+	/**
+	 * Return true if the result is ok.
+	 */
 	ok: true;
+	/**
+	 * Return true if the result is err.
+	 */
 	err: false;
+	/**
+	 * Return a value, a normal case value.
+	 */
 	value: T;
+	/**
+	 * Return a normal case value.
+	 * Then the result is err, this function raise error.
+	 * Do not use in the production environment.
+	 */
 	unwrap(): T;
+	/**
+	 * Return a normal case value.
+	 * Then the result is err, this function returns an argument.
+	 */
 	unwrapOrElse(defaultValue: any): T;
+	/**
+	 * Return an  abnormal case value.
+	 * Then the result is ok, this function raise error.
+	 * Do not use in the production environment.
+	 */
 	unwrapError(): never;
 }
 
 interface IErr<E> {
+	/**
+	 * Return true if the result is ok.
+	 */
 	ok: false;
+	/**
+	 * Return true if the result is err.
+	 */
 	err: true;
+	/**
+	 * Return an error, an abnormal case value.
+	 */
 	error: E;
+	/**
+	 * Return a normal case value.
+	 * Then the result is err, this function raise error.
+	 * Do not use in the production environment.
+	 */
 	unwrap(): never;
+	/**
+	 * Return a normal case value.
+	 * Then the result is err, this function returns an argument.
+	 */
 	unwrapOrElse(DefaultValue: any): any;
+	/**
+	* Return an  abnormal case value.
+	* Then the result is ok, this function raise error.
+	* Do not use in the production environment.
+	*/
 	unwrapError(): E;
 }
 
